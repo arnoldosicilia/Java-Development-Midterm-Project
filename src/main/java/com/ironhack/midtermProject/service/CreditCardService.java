@@ -21,15 +21,15 @@ public class CreditCardService {
     AccountHolderRepository accountHolderRepository;
 
     public CreditCard create(CreateCreditCard createCreditCard) throws UserNotFoundException {
+        AccountHolder accountHolder1 = accountHolderRepository.findById(createCreditCard.getPrimaryOwnerId()).orElseThrow(()-> new UserNotFoundException("User not found"));
+        AccountHolder accountHolder2 = accountHolderRepository.findById(createCreditCard.getPrimaryOwnerId()).orElseThrow(()-> new UserNotFoundException("User not found"));
 
-        System.out.println(createCreditCard.getPenaltyFee());
-        AccountHolder accountHolder1 = accountHolderRepository.findById(createCreditCard.getPrimaryOwnerId()).orElseThrow(()-> new UserNotFoundException("Not nd exceptionfou"));
-        AccountHolder accountHolder2 = accountHolderRepository.findById(createCreditCard.getPrimaryOwnerId()).orElseThrow(()-> new UserNotFoundException("no encontro el chisme"));
-        Money balance = new Money(new BigDecimal(createCreditCard.getBalance()));
-        Money penaltyFee = new Money(new BigDecimal(createCreditCard.getPenaltyFee()));
-        Money creditLimit = new Money(new BigDecimal(createCreditCard.getCreditLimit()));
-
-        CreditCard creditCard = new CreditCard(accountHolder1, accountHolder2, balance, penaltyFee, creditLimit, createCreditCard.getInterestRate());
+        CreditCard creditCard = new CreditCard(accountHolder1,
+                accountHolder2,
+                new Money(new BigDecimal(createCreditCard.getBalance())),
+                new Money(new BigDecimal(createCreditCard.getPenaltyFee())),
+                new Money(new BigDecimal(createCreditCard.getCreditLimit())),
+                createCreditCard.getInterestRate());
 
         return creditCardRepository.save(creditCard);
     }
