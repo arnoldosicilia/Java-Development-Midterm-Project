@@ -20,8 +20,8 @@ public class Savings extends StudentChecking{
     /** Constructors **/
     public Savings() {}
 
-    public Savings(Long id, AccountHolder primaryOwner, AccountHolder secondaryOwner, Money balance, Money penaltyFee, String secretKey, AccountStatus status, BigDecimal minimumBalance, BigDecimal interestRate) {
-        super(id, primaryOwner, secondaryOwner, balance, penaltyFee, secretKey, status);
+    public Savings(AccountHolder primaryOwner, AccountHolder secondaryOwner, Money balance, Money penaltyFee, String secretKey, AccountStatus status, BigDecimal minimumBalance, BigDecimal interestRate) {
+        super(primaryOwner, secondaryOwner, balance, penaltyFee, secretKey, status);
         this.minimumBalance = minimumBalance;
         this.interestRate = interestRate;
     }

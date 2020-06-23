@@ -35,8 +35,7 @@ public class AccountHolder {
     /** Constructors **/
     public AccountHolder() {}
 
-    public AccountHolder(Long id, String name, Date dateOfBirth, Address primaryAddress, Address mailingAddress, List<Account> primaryAccounts, List<Account> secondaryAccounts) {
-        this.id = id;
+    public AccountHolder(String name, Date dateOfBirth, Address primaryAddress, Address mailingAddress, List<Account> primaryAccounts, List<Account> secondaryAccounts) {
         this.name = name;
         this.dateOfBirth = dateOfBirth;
         this.primaryAddress = primaryAddress;

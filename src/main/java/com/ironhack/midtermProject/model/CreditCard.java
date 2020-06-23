@@ -8,28 +8,25 @@ import java.math.BigDecimal;
 @PrimaryKeyJoinColumn(name="id")
 public class CreditCard extends Account{
 
+    private Money creditLimit;
     private BigDecimal interestRate;
 
     /** Constructors **/
     public CreditCard() {}
 
-    public CreditCard(Long id, AccountHolder primaryOwner, AccountHolder secondaryOwner, Money balance, Money penaltyFee, BigDecimal interestRate) {
-        super(id, primaryOwner, secondaryOwner, balance, penaltyFee);
+    public CreditCard(AccountHolder primaryOwner, AccountHolder secondaryOwner, Money balance, Money penaltyFee, Money creditLimit, BigDecimal interestRate) {
+        super(primaryOwner, secondaryOwner, balance, penaltyFee);
+        this.creditLimit = creditLimit;
         this.interestRate = interestRate;
     }
 
     /** Getters & Setters **/
-    public Long getId() {
-        return id;
-    }
-    public void setId(Long id) {
-        this.id = id;
-    }
     public BigDecimal getInterestRate() {
         return interestRate;
     }
     public void setInterestRate(BigDecimal interestRate) {
         this.interestRate = interestRate;
     }
-
+    public Money getCreditLimit() {return creditLimit;}
+    public void setCreditLimit(Money creditLimit) {this.creditLimit = creditLimit;}
 }

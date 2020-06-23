@@ -16,8 +16,8 @@ public class StudentChecking extends Account {
     /** Constructors **/
     public StudentChecking() {}
 
-    public StudentChecking(Long id, AccountHolder primaryOwner, AccountHolder secondaryOwner, Money balance, Money penaltyFee, String secretKey, AccountStatus status) {
-        super(id, primaryOwner, secondaryOwner, balance, penaltyFee);
+    public StudentChecking(AccountHolder primaryOwner, AccountHolder secondaryOwner, Money balance, Money penaltyFee, String secretKey, AccountStatus status) {
+        super(primaryOwner, secondaryOwner, balance, penaltyFee);
         this.secretKey = secretKey;
         this.status = status;
     }
