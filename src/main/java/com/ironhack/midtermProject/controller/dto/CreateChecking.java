@@ -12,11 +12,15 @@ public class CreateChecking {
     @NotNull
     private Long primaryOwnerId;
     private Long secondaryOwnerId;
+    @NotNull
     private BigDecimal balance;
+    @NotNull
     private String secretKey;
+    @NotNull
     private AccountStatus status;
 
-    public CreateChecking(@NotNull Long primaryOwnerId, Long secondaryOwnerId, BigDecimal balance, String secretKey, AccountStatus status) {
+    /** Constructors **/
+    public CreateChecking(@NotNull Long primaryOwnerId, Long secondaryOwnerId, @NotNull BigDecimal balance, @NotNull String secretKey, @NotNull AccountStatus status) {
         this.primaryOwnerId = primaryOwnerId;
         this.secondaryOwnerId = secondaryOwnerId;
         this.balance = balance;
@@ -24,6 +28,7 @@ public class CreateChecking {
         this.status = status;
     }
 
+    /** Getters & Setters **/
     public Long getPrimaryOwnerId() {return primaryOwnerId;}
     public void setPrimaryOwnerId(Long primaryOwnerId) {this.primaryOwnerId = primaryOwnerId;}
     public Long getSecondaryOwnerId() {return secondaryOwnerId;}

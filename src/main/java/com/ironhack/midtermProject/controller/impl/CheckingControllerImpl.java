@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 @RestController
 public class CheckingControllerImpl implements CheckingControllerInterface {
 
@@ -19,6 +21,6 @@ public class CheckingControllerImpl implements CheckingControllerInterface {
 
     @PostMapping("/checking")
     @ResponseStatus(HttpStatus.CREATED)
-    public StudentChecking create(@RequestBody CreateChecking createChecking){return checkingService.create(createChecking);}
+    public StudentChecking create(@RequestBody @Valid CreateChecking createChecking){return checkingService.create(createChecking);}
 
 }

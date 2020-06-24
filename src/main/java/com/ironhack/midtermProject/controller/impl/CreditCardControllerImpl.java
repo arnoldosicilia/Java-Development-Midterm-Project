@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.w3c.dom.ls.LSOutput;
 
+import javax.validation.Valid;
+
 @RestController
 public class CreditCardControllerImpl implements CreditCardControllerInterface {
 
@@ -21,7 +23,7 @@ public class CreditCardControllerImpl implements CreditCardControllerInterface {
 
     @PostMapping("/credit-card")
     @ResponseStatus(HttpStatus.CREATED)
-    public CreditCard create(@RequestBody CreateCreditCard createCreditCard){
+    public CreditCard create(@RequestBody @Valid CreateCreditCard createCreditCard){
             System.out.println(createCreditCard.getPrimaryOwnerId() + " esta llamada es en el controller");
             return creditCardService.create(createCreditCard);}
 }

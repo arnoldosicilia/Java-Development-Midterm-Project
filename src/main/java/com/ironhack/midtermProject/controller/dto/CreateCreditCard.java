@@ -21,7 +21,9 @@ public class CreateCreditCard {
     @DecimalMin(value = "0.1", message = "The interest rate can not be lower than 0.1")
     private BigDecimal interestRate;
 
-    public CreateCreditCard(Long primaryOwnerId, Long secondaryOwnerId, BigDecimal balance, BigDecimal creditLimit, BigDecimal interestRate) {
+
+    /** Constructors **/
+    public CreateCreditCard(@NotNull Long primaryOwnerId, Long secondaryOwnerId, @NotNull BigDecimal balance, @DecimalMax(value = "100000.00", message = "The credit limit can not be higher than 100000") @DecimalMin(value = "100.00", message = "The credit limit can not be lower than 100000") BigDecimal creditLimit, @DecimalMax(value = "0.2", message = "The interest rate can not be higher than 0.2") @DecimalMin(value = "0.1", message = "The interest rate can not be lower than 0.1") BigDecimal interestRate) {
         this.primaryOwnerId = primaryOwnerId;
         this.secondaryOwnerId = secondaryOwnerId;
         this.balance = balance;
@@ -29,6 +31,7 @@ public class CreateCreditCard {
         this.interestRate = interestRate;
     }
 
+    /** Getters & Setters **/
     public Long getPrimaryOwnerId() {return primaryOwnerId;}
     public void setPrimaryOwnerId(Long primaryOwnerId) {this.primaryOwnerId = primaryOwnerId;}
     public Long getSecondaryOwnerId() {return secondaryOwnerId;}

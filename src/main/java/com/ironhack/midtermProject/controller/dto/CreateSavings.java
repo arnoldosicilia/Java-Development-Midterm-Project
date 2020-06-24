@@ -26,7 +26,9 @@ public class CreateSavings {
     @DecimalMin(value = "0" , message = "The interest rate has to be more than 0")
     private BigDecimal interestRate;
 
-    public CreateSavings(Long primaryOwnerId, Long secondaryOwnerId, BigDecimal balance, String secretKey, AccountStatus status, BigDecimal minimumBalance, BigDecimal interestRate) {
+
+    /** Constructors **/
+    public CreateSavings(@NotNull Long primaryOwnerId, Long secondaryOwnerId, @NotNull BigDecimal balance, @NotNull String secretKey, @NotNull AccountStatus status, @DecimalMax(value = "1000.00", message = "The minimum balance has to be less than 1000") @DecimalMin(value = "100.00", message = "The minimum balance has to be more than 100") BigDecimal minimumBalance, @DecimalMax(value = "0.5", message = "The interest rate has to be less than 0.5") @DecimalMin(value = "0", message = "The interest rate has to be more than 0") BigDecimal interestRate) {
         this.primaryOwnerId = primaryOwnerId;
         this.secondaryOwnerId = secondaryOwnerId;
         this.balance = balance;
@@ -36,6 +38,7 @@ public class CreateSavings {
         this.interestRate = interestRate;
     }
 
+    /** Getters & Setters **/
     public Long getPrimaryOwnerId() {return primaryOwnerId;}
     public void setPrimaryOwnerId(Long primaryOwnerId) {this.primaryOwnerId = primaryOwnerId;}
     public Long getSecondaryOwnerId() {return secondaryOwnerId;}
