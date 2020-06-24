@@ -4,23 +4,18 @@ package com.ironhack.midtermProject.model;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.PrimaryKeyJoinColumn;
 
 @Entity
-public class Admin {
-
-    @Id
-    @Column(unique = true)
-    private String name;
+@PrimaryKeyJoinColumn(name="id")
+public class Admin extends User {
 
     /** Constructors **/
     public Admin() {}
 
-    public Admin(String name) {
-        this.name = name;
+    public Admin(String name, String username, String password) {
+        super(name, username, password);
     }
-
     /** Getters & Setters **/
-    public String getName() {return name;}
-    public void setName(String name) {this.name = name;}
 
 }

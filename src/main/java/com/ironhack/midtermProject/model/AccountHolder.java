@@ -9,12 +9,9 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
-public class AccountHolder {
+@PrimaryKeyJoinColumn(name="id")
+public class AccountHolder extends User {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private String name;
     private LocalDate dateOfBirth;
     @Embedded
     @AttributeOverrides(value ={
@@ -37,8 +34,8 @@ public class AccountHolder {
     /** Constructors **/
     public AccountHolder() {}
 
-    public AccountHolder(String name, LocalDate dateOfBirth, Address primaryAddress, Address mailingAddress, List<Account> primaryAccounts, List<Account> secondaryAccounts) {
-        this.name = name;
+    public AccountHolder(String name, String username, String password, LocalDate dateOfBirth, Address primaryAddress, Address mailingAddress, List<Account> primaryAccounts, List<Account> secondaryAccounts) {
+        super(name, username, password);
         this.dateOfBirth = dateOfBirth;
         this.primaryAddress = primaryAddress;
         this.mailingAddress = mailingAddress;
@@ -47,10 +44,6 @@ public class AccountHolder {
     }
 
     /** Getters & Setters **/
-    public Long getId() {return id;}
-    public void setId(Long id) { this.id = id;}
-    public String getName() { return name;}
-    public void setName(String name) { this.name = name;}
     public LocalDate getDateOfBirth() { return dateOfBirth;}
     public void setDateOfBirth(LocalDate dateOfBirth) { this.dateOfBirth = dateOfBirth;}
     public Address getPrimaryAddress() { return primaryAddress;}
