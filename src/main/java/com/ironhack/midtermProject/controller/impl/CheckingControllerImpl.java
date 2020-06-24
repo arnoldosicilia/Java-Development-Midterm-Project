@@ -2,7 +2,7 @@ package com.ironhack.midtermProject.controller.impl;
 
 import com.ironhack.midtermProject.controller.dto.CreateChecking;
 import com.ironhack.midtermProject.controller.interfaces.CheckingControllerInterface;
-import com.ironhack.midtermProject.model.Checking;
+import com.ironhack.midtermProject.model.StudentChecking;
 import com.ironhack.midtermProject.service.CheckingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,6 +19,6 @@ public class CheckingControllerImpl implements CheckingControllerInterface {
 
     @PostMapping("/checking")
     @ResponseStatus(HttpStatus.CREATED)
-    public Checking create(@RequestBody CreateChecking createChecking){return checkingService.create(createChecking);}
+    public StudentChecking create(@RequestBody CreateChecking createChecking){return checkingService.create(createChecking);}
 
 }

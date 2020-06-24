@@ -14,11 +14,11 @@ public class CreateChecking {
     private String penaltyFee;
     private String secretKey;
     private AccountStatus status;
-    private BigDecimal monthlyMaintenanceFee;
+    private String monthlyMaintenanceFee;
     private String minimumBalance;
 
 
-    public CreateChecking(Long primaryOwnerId, Long secondaryOwnerId, String balance, String penaltyFee, String secretKey, AccountStatus status, BigDecimal monthlyMaintenanceFee, String minimumBalance) {
+    public CreateChecking(Long primaryOwnerId, Long secondaryOwnerId, String balance, String penaltyFee, String secretKey, AccountStatus status, String monthlyMaintenanceFee, String minimumBalance) {
         this.primaryOwnerId = primaryOwnerId;
         this.secondaryOwnerId = secondaryOwnerId;
         this.balance = balance;
@@ -42,8 +42,8 @@ public class CreateChecking {
     public void setSecretKey(String secretKey) {this.secretKey = secretKey;}
     public AccountStatus getStatus() {return status;}
     public void setStatus(AccountStatus status) {this.status = status;}
-    public BigDecimal getMonthlyMaintenanceFee() {return monthlyMaintenanceFee;}
-    public void setMonthlyMaintenanceFee(BigDecimal monthlyMaintenanceFee) {this.monthlyMaintenanceFee = monthlyMaintenanceFee;}
+    public String getMonthlyMaintenanceFee() {return monthlyMaintenanceFee;}
+    public void setMonthlyMaintenanceFee(String monthlyMaintenanceFee) {this.monthlyMaintenanceFee = monthlyMaintenanceFee;}
     public String getMinimumBalance() {return minimumBalance;}
     public void setMinimumBalance(String minimumBalance) {this.minimumBalance = minimumBalance;}
 

@@ -2,6 +2,7 @@ package com.ironhack.midtermProject.model;
 
 import com.ironhack.midtermProject.classes.Money;
 import com.ironhack.midtermProject.enums.AccountStatus;
+import org.hibernate.annotations.Check;
 
 import javax.persistence.Entity;
 import javax.persistence.PrimaryKeyJoinColumn;
@@ -23,12 +24,20 @@ public class StudentChecking extends Account {
     }
 
     /** Getters & Setters **/
+
     public String getSecretKey() {
         return secretKey;
     }
+
     public void setSecretKey(String secretKey) {
         this.secretKey = secretKey;
     }
-    public AccountStatus getStatus() {return status; }
-    public void setStatus(AccountStatus status) {this.status = status;}
+
+    public AccountStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(AccountStatus status) {
+        this.status = status;
+    }
 }

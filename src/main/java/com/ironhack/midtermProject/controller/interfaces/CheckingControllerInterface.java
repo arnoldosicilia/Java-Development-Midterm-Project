@@ -1,11 +1,9 @@
 package com.ironhack.midtermProject.controller.interfaces;
 
 import com.ironhack.midtermProject.controller.dto.CreateChecking;
-import com.ironhack.midtermProject.controller.dto.CreateSavings;
-import com.ironhack.midtermProject.model.Checking;
-import com.ironhack.midtermProject.model.Savings;
+import com.ironhack.midtermProject.model.StudentChecking;
 
 public interface CheckingControllerInterface {
-    public Checking create(CreateChecking createChecking);
+    public StudentChecking create(CreateChecking createChecking);
 }
 

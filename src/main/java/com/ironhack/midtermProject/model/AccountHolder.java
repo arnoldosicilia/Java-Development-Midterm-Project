@@ -3,6 +3,8 @@ package com.ironhack.midtermProject.model;
 import com.ironhack.midtermProject.classes.Address;
 
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -13,7 +15,7 @@ public class AccountHolder {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    private Date dateOfBirth;
+    private LocalDate dateOfBirth;
     @Embedded
     @AttributeOverrides(value ={
             @AttributeOverride(name = "direction", column = @Column(name = "primary_address_direction")),
@@ -35,7 +37,7 @@ public class AccountHolder {
     /** Constructors **/
     public AccountHolder() {}
 
-    public AccountHolder(String name, Date dateOfBirth, Address primaryAddress, Address mailingAddress, List<Account> primaryAccounts, List<Account> secondaryAccounts) {
+    public AccountHolder(String name, LocalDate dateOfBirth, Address primaryAddress, Address mailingAddress, List<Account> primaryAccounts, List<Account> secondaryAccounts) {
         this.name = name;
         this.dateOfBirth = dateOfBirth;
         this.primaryAddress = primaryAddress;
@@ -49,10 +51,11 @@ public class AccountHolder {
     public void setId(Long id) { this.id = id;}
     public String getName() { return name;}
     public void setName(String name) { this.name = name;}
-    public Date getDateOfBirth() { return dateOfBirth;}
-    public void setDateOfBirth(Date dateOfBirth) { this.dateOfBirth = dateOfBirth;}
+    public LocalDate getDateOfBirth() { return dateOfBirth;}
+    public void setDateOfBirth(LocalDate dateOfBirth) { this.dateOfBirth = dateOfBirth;}
     public Address getPrimaryAddress() { return primaryAddress;}
     public void setPrimaryAddress(Address primaryAddress) {this.primaryAddress = primaryAddress;}
     public Address getMailingAddress() {return mailingAddress;}
     public void setMailingAddress(Address mailingAddress) {this.mailingAddress = mailingAddress;}
+
 }

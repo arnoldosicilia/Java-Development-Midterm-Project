@@ -12,8 +12,10 @@ import java.math.BigDecimal;
 @Entity
 @PrimaryKeyJoinColumn(name="id")
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public class Savings extends StudentChecking{
+public class Savings extends Account{
 
+    private String secretKey;
+    private AccountStatus status;
     private Money minimumBalance;
     private BigDecimal interestRate;
 
@@ -21,10 +23,10 @@ public class Savings extends StudentChecking{
     public Savings() {}
 
     public Savings(AccountHolder primaryOwner, Money balance, Money penaltyFee, String secretKey, AccountStatus status) {
-        super(primaryOwner, balance, penaltyFee, secretKey, status);
+        super(primaryOwner, balance, penaltyFee);
+        this.secretKey = secretKey;
+        this.status = status;
     }
-
-
 
     /** Getters & Setters **/
     public Money getMinimumBalance() {return minimumBalance;}
