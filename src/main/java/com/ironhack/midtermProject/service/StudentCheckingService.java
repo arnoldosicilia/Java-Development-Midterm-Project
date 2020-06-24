@@ -28,7 +28,6 @@ public class StudentCheckingService {
         AccountHolder accountHolder2 = accountHolderRepository.findById(createStudentChecking.getPrimaryOwnerId()).orElseThrow(()-> new UserNotFoundException("User not found"));
 
         StudentChecking studentChecking = new StudentChecking(accountHolder1,
-                accountHolder2,
                 new Money(new BigDecimal(createStudentChecking.getBalance())),
                 new Money(new BigDecimal(createStudentChecking.getPenaltyFee())),
                 createStudentChecking.getSecretKey(),

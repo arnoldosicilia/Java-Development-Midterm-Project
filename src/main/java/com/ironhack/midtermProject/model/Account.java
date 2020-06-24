@@ -32,9 +32,8 @@ public abstract class Account {
     /** Constructors **/
     public Account() {}
 
-    public Account(AccountHolder primaryOwner, AccountHolder secondaryOwner, Money balance, Money penaltyFee) {
+    public Account(AccountHolder primaryOwner, Money balance, Money penaltyFee) {
         this.primaryOwner = primaryOwner;
-        this.secondaryOwner = secondaryOwner;
         this.balance = balance;
         this.penaltyFee = penaltyFee;
     }

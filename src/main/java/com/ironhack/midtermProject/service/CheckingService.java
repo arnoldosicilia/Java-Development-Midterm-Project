@@ -25,7 +25,6 @@ public class CheckingService {
         AccountHolder accountHolder2 = accountHolderRepository.findById(createChecking.getSecondaryOwnerId()).orElseThrow(()-> new UserNotFoundException("User not found"));
 
         Checking checking = new Checking(accountHolder1,
-                accountHolder2,
                 new Money(new BigDecimal(createChecking.getBalance())),
                 new Money(new BigDecimal(createChecking.getPenaltyFee())),
                 createChecking.getSecretKey(),

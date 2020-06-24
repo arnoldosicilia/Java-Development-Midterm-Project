@@ -21,8 +21,8 @@ public class Checking extends StudentChecking {
     /** Constructors **/
     public Checking() {}
 
-    public Checking(AccountHolder primaryOwner, AccountHolder secondaryOwner, Money balance, Money penaltyFee, String secretKey, AccountStatus status, BigDecimal monthlyMaintenanceFee, Money minimumBalance) {
-        super(primaryOwner, secondaryOwner, balance, penaltyFee, secretKey, status);
+    public Checking(AccountHolder primaryOwner, Money balance, Money penaltyFee, String secretKey, AccountStatus status, BigDecimal monthlyMaintenanceFee, Money minimumBalance) {
+        super(primaryOwner, balance, penaltyFee, secretKey, status);
         this.monthlyMaintenanceFee = monthlyMaintenanceFee;
         this.minimumBalance = minimumBalance;
     }

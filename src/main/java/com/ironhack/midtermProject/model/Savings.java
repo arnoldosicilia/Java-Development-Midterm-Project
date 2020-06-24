@@ -14,21 +14,21 @@ import java.math.BigDecimal;
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class Savings extends StudentChecking{
 
-    private BigDecimal minimumBalance;
+    private Money minimumBalance;
     private BigDecimal interestRate;
 
     /** Constructors **/
     public Savings() {}
 
-    public Savings(AccountHolder primaryOwner, AccountHolder secondaryOwner, Money balance, Money penaltyFee, String secretKey, AccountStatus status, BigDecimal minimumBalance, BigDecimal interestRate) {
-        super(primaryOwner, secondaryOwner, balance, penaltyFee, secretKey, status);
-        this.minimumBalance = minimumBalance;
-        this.interestRate = interestRate;
+    public Savings(AccountHolder primaryOwner, Money balance, Money penaltyFee, String secretKey, AccountStatus status) {
+        super(primaryOwner, balance, penaltyFee, secretKey, status);
     }
 
+
+
     /** Getters & Setters **/
-    public BigDecimal getMinimumBalance() {return minimumBalance;}
-    public void setMinimumBalance(BigDecimal minimumBalance) {this.minimumBalance = minimumBalance;}
+    public Money getMinimumBalance() {return minimumBalance;}
+    public void setMinimumBalance(Money minimumBalance) {this.minimumBalance = minimumBalance;}
     public BigDecimal getInterestRate() {return interestRate;}
     public void setInterestRate(BigDecimal interestRate) {this.interestRate = interestRate;}
 

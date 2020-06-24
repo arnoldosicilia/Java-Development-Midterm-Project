@@ -22,10 +22,9 @@ public class CreditCardService {
 
     public CreditCard create(CreateCreditCard createCreditCard) throws UserNotFoundException {
         AccountHolder accountHolder1 = accountHolderRepository.findById(createCreditCard.getPrimaryOwnerId()).orElseThrow(()-> new UserNotFoundException("User not found"));
-        AccountHolder accountHolder2 = accountHolderRepository.findById(createCreditCard.getPrimaryOwnerId()).orElseThrow(()-> new UserNotFoundException("User not found"));
+        AccountHolder accountHolder2 = accountHolderRepository.findById(createCreditCard.getSecondaryOwner()).orElseThrow(()-> new UserNotFoundException("User not found"));
 
         CreditCard creditCard = new CreditCard(accountHolder1,
-                accountHolder2,
                 new Money(new BigDecimal(createCreditCard.getBalance())),
                 new Money(new BigDecimal(createCreditCard.getPenaltyFee())),
                 new Money(new BigDecimal(createCreditCard.getCreditLimit())),

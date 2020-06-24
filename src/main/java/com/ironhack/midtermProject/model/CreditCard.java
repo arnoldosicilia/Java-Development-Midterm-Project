@@ -14,8 +14,8 @@ public class CreditCard extends Account{
     /** Constructors **/
     public CreditCard() {}
 
-    public CreditCard(AccountHolder primaryOwner, AccountHolder secondaryOwner, Money balance, Money penaltyFee, Money creditLimit, BigDecimal interestRate) {
-        super(primaryOwner, secondaryOwner, balance, penaltyFee);
+    public CreditCard(AccountHolder primaryOwner, Money balance, Money penaltyFee, Money creditLimit, BigDecimal interestRate) {
+        super(primaryOwner, balance, penaltyFee);
         this.creditLimit = creditLimit;
         this.interestRate = interestRate;
     }
