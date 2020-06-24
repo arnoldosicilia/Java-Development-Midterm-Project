@@ -23,8 +23,7 @@ public class StudentCheckingService {
     public StudentChecking create(CreateChecking createStudentChecking,AccountHolder accountHolder1, AccountHolder accountHolder2 ){
 
         StudentChecking studentChecking = new StudentChecking(accountHolder1,
-                new Money(new BigDecimal(createStudentChecking.getBalance())),
-                new Money(new BigDecimal(createStudentChecking.getPenaltyFee())),
+                new Money(createStudentChecking.getBalance()),
                 createStudentChecking.getSecretKey(),
                 createStudentChecking.getStatus());
 

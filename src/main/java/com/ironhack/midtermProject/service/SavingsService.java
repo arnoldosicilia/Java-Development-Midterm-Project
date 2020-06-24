@@ -25,15 +25,15 @@ public class SavingsService {
         AccountHolder accountHolder2 = createSavings.getSecondaryOwnerId() != null ? accountHolderRepository.findById(createSavings.getSecondaryOwnerId()).orElseThrow(()-> new UserNotFoundException("User not found")) : null ;
 
         Savings savings = new Savings(accountHolder1,
-                new Money(new BigDecimal(createSavings.getBalance())),
-                new Money(new BigDecimal(createSavings.getPenaltyFee())),
+                new Money(createSavings.getBalance()),
                 createSavings.getSecretKey(),
                 createSavings.getStatus());
 
         if (accountHolder2 != null) {savings.setSecondaryOwner(accountHolder2);}
 
         savings.setInterestRate(createSavings.getInterestRate() != null ? createSavings.getInterestRate() : new BigDecimal("0.0025"));
-        savings.setMinimumBalance(createSavings.getMinimumBalance() != null ?  new Money(createSavings.getMinimumBalance()) : new Money(new BigDecimal("1000")));
+        savings.setMinimumBalance(createSavings.getMinimumBalance() != null ? new Money(createSavings.getMinimumBalance()) : new Money(new BigDecimal("1000")));
+
 
         return savingsRepository.save(savings);
     }

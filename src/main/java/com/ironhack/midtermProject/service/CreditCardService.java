@@ -25,11 +25,10 @@ public class CreditCardService {
         AccountHolder accountHolder2 = createCreditCard.getSecondaryOwnerId() != null ? accountHolderRepository.findById(createCreditCard.getSecondaryOwnerId()).orElseThrow(()-> new UserNotFoundException("User not found")) : null ;
 
         CreditCard creditCard = new CreditCard(accountHolder1,
-                new Money(new BigDecimal(createCreditCard.getBalance())),
-                new Money(new BigDecimal(createCreditCard.getPenaltyFee())));
+                new Money(createCreditCard.getBalance()));
 
         if (accountHolder2 != null) {creditCard.setSecondaryOwner(accountHolder2);}
-        creditCard.setCreditLimit(createCreditCard.getCreditLimit() != null ? new Money(new BigDecimal(createCreditCard.getCreditLimit())) : new Money(new BigDecimal("100")));
+        creditCard.setCreditLimit(createCreditCard.getCreditLimit() != null ? new Money(createCreditCard.getCreditLimit()) : new Money(new BigDecimal("100")));
         creditCard.setInterestRate(createCreditCard.getInterestRate() != null ? createCreditCard.getInterestRate() : new BigDecimal("0.2"));
 
         return creditCardRepository.save(creditCard);

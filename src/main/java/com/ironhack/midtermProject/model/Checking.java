@@ -26,8 +26,8 @@ public class Checking extends StudentChecking {
     /** Constructors **/
     public Checking() {}
 
-    public Checking(AccountHolder primaryOwner, Money balance, Money penaltyFee, String secretKey, AccountStatus status) {
-        super(primaryOwner, balance, penaltyFee, secretKey, status);
+    public Checking(AccountHolder primaryOwner, Money balance, String secretKey, AccountStatus status) {
+        super(primaryOwner, balance, secretKey, status);
     }
 
     /** Getters & Setters **/
