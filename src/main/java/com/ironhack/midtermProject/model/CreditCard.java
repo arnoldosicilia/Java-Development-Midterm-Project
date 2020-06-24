@@ -14,19 +14,13 @@ public class CreditCard extends Account{
     /** Constructors **/
     public CreditCard() {}
 
-    public CreditCard(AccountHolder primaryOwner, Money balance, Money penaltyFee, Money creditLimit, BigDecimal interestRate) {
+    public CreditCard(AccountHolder primaryOwner, Money balance, Money penaltyFee) {
         super(primaryOwner, balance, penaltyFee);
-        this.creditLimit = creditLimit;
-        this.interestRate = interestRate;
     }
 
     /** Getters & Setters **/
-    public BigDecimal getInterestRate() {
-        return interestRate;
-    }
-    public void setInterestRate(BigDecimal interestRate) {
-        this.interestRate = interestRate;
-    }
     public Money getCreditLimit() {return creditLimit;}
     public void setCreditLimit(Money creditLimit) {this.creditLimit = creditLimit;}
+    public BigDecimal getInterestRate() {return interestRate;}
+    public void setInterestRate(BigDecimal interestRate) {this.interestRate = interestRate;}
 }

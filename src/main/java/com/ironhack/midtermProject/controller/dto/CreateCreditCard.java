@@ -24,8 +24,8 @@ public class CreateCreditCard {
 
     public Long getPrimaryOwnerId() {return primaryOwnerId;}
     public void setPrimaryOwnerId(Long primaryOwnerId) {this.primaryOwnerId = primaryOwnerId;}
-    public Long getSecondaryOwner() {return secondaryOwnerId;}
-    public void setSecondaryOwner(Long secondaryOwner) {this.secondaryOwnerId = secondaryOwner;}
+    public Long getSecondaryOwnerId() {return secondaryOwnerId;}
+    public void setSecondaryOwnerId(Long secondaryOwnerId) {this.secondaryOwnerId = secondaryOwnerId;}
     public String getBalance() {return balance;}
     public void setBalance(String balance) {this.balance = balance;}
     public String getPenaltyFee() {return penaltyFee;}
