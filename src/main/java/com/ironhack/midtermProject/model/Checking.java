@@ -10,7 +10,12 @@ import java.math.BigDecimal;
 @PrimaryKeyJoinColumn(name="id")
 public class Checking extends StudentChecking {
 
-    private BigDecimal monthlyMaintenanceFee;
+    @Embedded
+    @AttributeOverrides(value ={
+            @AttributeOverride(name = "amount", column = @Column(name = "monthly_maintenance_fee_amount")),
+            @AttributeOverride(name = "currency", column = @Column(name = "monthly_maintenance_fee_currency"))
+    })
+    private Money monthlyMaintenanceFee;
     @Embedded
     @AttributeOverrides(value ={
             @AttributeOverride(name = "amount", column = @Column(name = "minimum_balance_amount")),
@@ -21,10 +26,8 @@ public class Checking extends StudentChecking {
     /** Constructors **/
     public Checking() {}
 
-    public Checking(Long id, AccountHolder primaryOwner, AccountHolder secondaryOwner, Money balance, Money penaltyFee, String secretKey, AccountStatus status, BigDecimal monthlyMaintenanceFee, Money minimumBalance) {
-        super(id, primaryOwner, secondaryOwner, balance, penaltyFee, secretKey, status);
-        this.monthlyMaintenanceFee = monthlyMaintenanceFee;
-        this.minimumBalance = minimumBalance;
+    public Checking(AccountHolder primaryOwner, Money balance, String secretKey, AccountStatus status) {
+        super(primaryOwner, balance, secretKey, status);
     }
 
     /** Getters & Setters **/
@@ -34,9 +37,9 @@ public class Checking extends StudentChecking {
     public void setMinimumBalance(Money minimumBalance) {
         this.minimumBalance = minimumBalance;
     }
-    public BigDecimal getMonthlyMaintenanceFee() {
+    public Money getMonthlyMaintenanceFee() {
         return monthlyMaintenanceFee;
     }
-    public void setMonthlyMaintenanceFee(BigDecimal monthlyMaintenanceFee) {this.monthlyMaintenanceFee = monthlyMaintenanceFee;}
+    public void setMonthlyMaintenanceFee(Money monthlyMaintenanceFee) {this.monthlyMaintenanceFee = monthlyMaintenanceFee;}
 
 }

@@ -9,6 +9,8 @@ public class Address {
     private int number;
 
     /** Constructors **/
+    public Address(){}
+
     public Address(String direction, int number) {
         this.direction = direction;
         this.number = number;

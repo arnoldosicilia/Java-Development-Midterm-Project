@@ -15,6 +15,10 @@ public class Money {
     private static final RoundingMode DEFAULT_ROUNDING = RoundingMode.HALF_EVEN;
     private final Currency currency;
 
+    public Money() {
+        currency = Currency.getInstance("USD");
+    }
+
     /**
      * Class constructor specifying amount, currency, and rounding
      **/
@@ -34,6 +38,8 @@ public class Money {
     public Money(BigDecimal amount) {
         this(amount, USD, DEFAULT_ROUNDING);
     }
+
+
     public BigDecimal increaseAmount(Money money) {
         setAmount(this.amount.add(money.amount));
         return this.amount;

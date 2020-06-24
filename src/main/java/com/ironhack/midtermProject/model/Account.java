@@ -2,6 +2,7 @@ package com.ironhack.midtermProject.model;
 
 import com.ironhack.midtermProject.classes.Money;
 import javax.persistence.*;
+import java.math.BigDecimal;
 
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
@@ -32,12 +33,10 @@ public abstract class Account {
     /** Constructors **/
     public Account() {}
 
-    public Account(Long id, AccountHolder primaryOwner, AccountHolder secondaryOwner, Money balance, Money penaltyFee) {
-        this.id = id;
+    public Account(AccountHolder primaryOwner, Money balance) {
         this.primaryOwner = primaryOwner;
-        this.secondaryOwner = secondaryOwner;
         this.balance = balance;
-        this.penaltyFee = penaltyFee;
+        this.penaltyFee = new Money(new BigDecimal("40"));
     }
 
     /** Getters & Setters **/
