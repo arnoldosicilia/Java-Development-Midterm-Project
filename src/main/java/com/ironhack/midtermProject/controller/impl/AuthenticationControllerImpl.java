@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletRequest;
 
 @RestController
-public class AuthenticationController implements AuthenticationControllerInterface {
+public class AuthenticationControllerImpl implements AuthenticationControllerInterface {
 
     @Autowired
     UserRepository userRepository;

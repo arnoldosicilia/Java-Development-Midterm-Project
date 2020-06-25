@@ -5,6 +5,7 @@ import com.ironhack.midtermProject.classes.Address;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -34,13 +35,13 @@ public class AccountHolder extends User {
     /** Constructors **/
     public AccountHolder() {}
 
-    public AccountHolder(String name, String username, String password, LocalDate dateOfBirth, Address primaryAddress, Address mailingAddress, List<Account> primaryAccounts, List<Account> secondaryAccounts) {
+    public AccountHolder(String name, String username, String password, LocalDate dateOfBirth, Address primaryAddress, Address mailingAddress) {
         super(name, username, password);
         this.dateOfBirth = dateOfBirth;
         this.primaryAddress = primaryAddress;
         this.mailingAddress = mailingAddress;
-        this.primaryAccounts = primaryAccounts;
-        this.secondaryAccounts = secondaryAccounts;
+        this.primaryAccounts = new ArrayList<>();
+        this.secondaryAccounts = new ArrayList<>();
     }
 
     /** Getters & Setters **/
