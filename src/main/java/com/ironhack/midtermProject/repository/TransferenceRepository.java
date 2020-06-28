@@ -12,13 +12,30 @@ import java.util.List;
 @Repository
 public interface TransferenceRepository extends JpaRepository<Transference, Long> {
 
+    /**
+     * Returns a the sum of the transferences amount done by a given id account in the last day
+     * **/
     @Query(value = "SELECT SUM(amount)\n" +
             "FROM    transference\n" +
-            "WHERE   transference_date >= NOW() - INTERVAL 1 DAY",
+            "WHERE origin_account = :id\n" +
+            "AND   transference_date >= NOW() - INTERVAL 1 DAY",
             nativeQuery = true)
-    public BigDecimal sumLastDayTransferences();
+    public BigDecimal sumLastDayTransferences(Long id);
 
+    /**
+     * Returns a List of the transferences done by a given id account in the last second
+     * Has 3601 seconds because an adjustment on the UTC configuration
+     * **/
+    @Query(value = "SELECT * \n" +
+            "FROM    transference\n" +
+            "WHERE origin_account = :id\n" +
+            "AND   transference_date >= NOW() - INTERVAL 3601 SECOND",
+            nativeQuery = true)
+    public List<Transference> lastSecondTransferences(Long id);
 
+    /**
+     * Returns a List of sums of the transferences amounts done by a given id account in
+     * **/
     @Query(value = "SELECT SUM(amount), DAY(transference_date) \n" +
             "FROM transference\n" +
             "WHERE origin_account = :id\n" +

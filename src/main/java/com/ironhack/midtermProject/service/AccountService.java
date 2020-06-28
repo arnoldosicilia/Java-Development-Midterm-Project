@@ -40,7 +40,7 @@ public class AccountService {
             throw new AuthenticationErrorException("The Account does not belong to the logged user");
         }
 
-        if(!fraudService.firstCondition(newTransference)) {
+        if(!fraudService.firstCondition(newTransference) || !fraudService.secondCondition(newTransference)) {
             throw new FraudException("This transaction can not be done due to fraud detections");
         }
 

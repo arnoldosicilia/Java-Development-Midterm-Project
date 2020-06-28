@@ -18,13 +18,10 @@ public class FraudService {
 
     public boolean firstCondition(NewTransference newTransference){
 
-
-        System.out.println("PRIMERO");
-        BigDecimal sumLastDayAmounts = transferenceRepository.sumLastDayTransferences();
-        System.out.println("SEGUNDO");
+        BigDecimal sumLastDayAmounts = transferenceRepository.sumLastDayTransferences(newTransference.getOriginId());
         List<BigDecimal> sumOfTransferenceByDay = transferenceRepository.sumOfTransferenceByDay(newTransference.getOriginId());
-        System.out.println("TERCERO");
-       /* BigDecimal max = sumOfTransferenceByDay.stream().max(BigDecimal::compareTo).get();
+
+        BigDecimal max = sumOfTransferenceByDay.stream().max(BigDecimal::compareTo).get();
 
         System.out.println(max);
         System.out.println(newTransference.getAmount());
@@ -38,9 +35,20 @@ public class FraudService {
         }
         System.out.println(result);
         return result;
-
-        */
-
-        return true;
     }
+
+    public boolean secondCondition(NewTransference newTransference){
+
+        boolean result;
+
+        List<Transference> transferences = transferenceRepository.lastSecondTransferences(newTransference.getOriginId());
+        if(transferences.size() != 0 ){
+            result = false;
+        }else{
+            result = true;
+        }
+        return result;
+    }
+
+
 }
