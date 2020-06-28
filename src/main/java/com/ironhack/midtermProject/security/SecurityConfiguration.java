@@ -28,7 +28,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
-        auth.inMemoryAuthentication().withUser("arnoldo").password(passwordEncoder.encode("arnoldo")).roles("ADMIN");
+        //auth.inMemoryAuthentication().withUser("arnoldo").password(passwordEncoder.encode("arnoldo")).roles("ADMIN");
         //auth.inMemoryAuthentication().withUser("irene").password(passwordEncoder.encode("irene")).roles("SALES");
         //auth.inMemoryAuthentication().withUser("gonzalo").password(passwordEncoder.encode("gonzalo")).roles("THIRD_PARTY");
     }
@@ -40,8 +40,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .mvcMatchers("/login").permitAll()
                 .mvcMatchers("/admin").hasRole("ADMIN")
-                .mvcMatchers("/").hasAnyRole("ADMIN", "SALES")
-                .anyRequest().authenticated()
+                .mvcMatchers("/account-holder").hasRole( "ACCOUNT_HOLDER")
                 .and()
                 .logout()
                 .permitAll()

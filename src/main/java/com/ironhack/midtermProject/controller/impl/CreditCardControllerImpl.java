@@ -1,19 +1,17 @@
 package com.ironhack.midtermProject.controller.impl;
 
-import com.ironhack.midtermProject.controller.dto.CreateCreditCard;
+import com.ironhack.midtermProject.controller.dto.balance.ShowBalance;
+import com.ironhack.midtermProject.controller.dto.create.CreateCreditCard;
 import com.ironhack.midtermProject.controller.interfaces.CreditCardControllerInterface;
 import com.ironhack.midtermProject.model.CreditCard;
+import com.ironhack.midtermProject.model.Savings;
 import com.ironhack.midtermProject.service.CreditCardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.converter.json.GsonBuilderUtils;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
-import org.w3c.dom.ls.LSOutput;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 public class CreditCardControllerImpl implements CreditCardControllerInterface {
@@ -21,9 +19,19 @@ public class CreditCardControllerImpl implements CreditCardControllerInterface {
     @Autowired
     CreditCardService creditCardService;
 
-    @PostMapping("/credit-card")
+    @PostMapping("/admin/credit-card")
     @ResponseStatus(HttpStatus.CREATED)
-    public CreditCard create(@RequestBody @Valid CreateCreditCard createCreditCard){
-            System.out.println(createCreditCard.getPrimaryOwnerId() + " esta llamada es en el controller");
-            return creditCardService.create(createCreditCard);}
+    public CreditCard create(@RequestBody @Valid CreateCreditCard createCreditCard){ return creditCardService.create(createCreditCard);}
+
+    @GetMapping("/credit-card")
+    @ResponseStatus(HttpStatus.OK)
+    public List<CreditCard> findAll(){ return creditCardService.findAll();}
+
+    @GetMapping("/credit-card/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public CreditCard findById(@PathVariable Long id){ return creditCardService.findById(id);}
+
+    @GetMapping("/credit-card/{id}/check-balance")
+    @ResponseStatus(HttpStatus.OK)
+    public ShowBalance checkBalance(@PathVariable Long id){return creditCardService.checkBalance(id);}
 }

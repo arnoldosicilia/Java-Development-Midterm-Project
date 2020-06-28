@@ -1,7 +1,7 @@
 package com.ironhack.midtermProject.service;
 
 import com.ironhack.midtermProject.classes.Address;
-import com.ironhack.midtermProject.controller.dto.CreateAccountHolder;
+import com.ironhack.midtermProject.controller.dto.create.CreateAccountHolder;
 import com.ironhack.midtermProject.enums.SystemRole;
 import com.ironhack.midtermProject.model.AccountHolder;
 import com.ironhack.midtermProject.model.Role;
@@ -10,8 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.time.LocalDate;
 
 @Service
 public class AccountHolderService {

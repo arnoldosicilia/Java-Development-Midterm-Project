@@ -15,12 +15,14 @@ public class CustomSecurityUser extends User implements UserDetails {
     private static final long serialVersionUID = -4381938875186527688L;
 
     public CustomSecurityUser(User user) {
+
         System.out.println(user + "IN custom security");
 
         this.setRoles(user.getRoles());
         this.setId(user.getId());
         this.setPassword(user.getPassword());
-        this.setName(user.getUsername());
+        this.setName(user.getName());
+        this.setUsername(user.getUsername());
     }
 
     @Override

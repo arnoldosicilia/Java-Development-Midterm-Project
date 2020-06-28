@@ -1,6 +1,6 @@
 package com.ironhack.midtermProject.controller.impl;
 
-import com.ironhack.midtermProject.controller.dto.CreateAccountHolder;
+import com.ironhack.midtermProject.controller.dto.create.CreateAccountHolder;
 import com.ironhack.midtermProject.controller.interfaces.AccountHolderControllerInterface;
 import com.ironhack.midtermProject.model.AccountHolder;
 import com.ironhack.midtermProject.service.AccountHolderService;
@@ -17,7 +17,7 @@ public class AccountHolderControllerImpl implements AccountHolderControllerInter
     @Autowired
     AccountHolderService accountHolderService;
 
-    @PostMapping("/account-holder")
+    @PostMapping("/admin/account-holder")
     @ResponseStatus(HttpStatus.CREATED)
     public AccountHolder create(@RequestBody CreateAccountHolder createAccountHolder) {return accountHolderService.create(createAccountHolder);}
 }

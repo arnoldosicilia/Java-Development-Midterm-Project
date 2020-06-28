@@ -1,16 +1,21 @@
 package com.ironhack.midtermProject.service;
 
 import com.ironhack.midtermProject.classes.Money;
-import com.ironhack.midtermProject.controller.dto.CreateSavings;
+import com.ironhack.midtermProject.controller.dto.balance.ShowBalance;
+import com.ironhack.midtermProject.controller.dto.create.CreateSavings;
+import com.ironhack.midtermProject.exceptions.AccountNotFoundException;
 import com.ironhack.midtermProject.exceptions.UserNotFoundException;
 import com.ironhack.midtermProject.model.AccountHolder;
+import com.ironhack.midtermProject.model.CreditCard;
 import com.ironhack.midtermProject.model.Savings;
+import com.ironhack.midtermProject.model.StudentChecking;
 import com.ironhack.midtermProject.repository.AccountHolderRepository;
 import com.ironhack.midtermProject.repository.SavingsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Service
 public class SavingsService {
@@ -37,4 +42,26 @@ public class SavingsService {
 
         return savingsRepository.save(savings);
     }
+
+    public List<Savings> findAll(){ return savingsRepository.findAll();}
+    public Savings findById(Long id){return savingsRepository.findById(id).orElseThrow(()-> new AccountNotFoundException("The account has not been found"));}
+
+    public ShowBalance checkBalance(Long id){
+        Savings account = savingsRepository.findById(id).orElseThrow(() -> new AccountNotFoundException("The Checking Account has not been found"));
+        ShowBalance showBalance = new ShowBalance(account.getId(), account.getBalance().getAmount(), account.getBalance().getCurrency());
+        return showBalance;
+    }
+
+    public void debitBalance(Long id, BigDecimal amount) {
+        Savings account = savingsRepository.findById(id).orElseThrow(()-> new AccountNotFoundException("The Checking Account has not been found"));
+        account.getBalance().decreaseAmount(amount);
+        savingsRepository.save(account);
+    }
+
+    public void creditBalance(Long id, BigDecimal amount) {
+        Savings account = savingsRepository.findById(id).orElseThrow(()-> new AccountNotFoundException("The Checking Account has not been found"));
+        account.getBalance().increaseAmount(amount);
+        savingsRepository.save(account);
+    }
+
 }

@@ -3,6 +3,8 @@ package com.ironhack.midtermProject.model;
 import com.ironhack.midtermProject.classes.Money;
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
@@ -26,7 +28,13 @@ public abstract class Account {
             @AttributeOverride(name = "amount", column = @Column(name = "penalty_fee_amount")),
             @AttributeOverride(name = "currency", column = @Column(name = "penalty_fee_currency"))
     })
+    @OneToMany(mappedBy = "originAccount")
+    protected List<Transference> sentTransferences;
+    @OneToMany(mappedBy = "destinationAccount")
+    protected List<Transference> recievedTransferences;
+
     protected Money penaltyFee;
+    protected LocalDateTime createdDateTime;
 
 
     /** Constructors **/
@@ -36,6 +44,7 @@ public abstract class Account {
         this.primaryOwner = primaryOwner;
         this.balance = balance;
         this.penaltyFee = new Money(new BigDecimal("40"));
+        this.createdDateTime = LocalDateTime.now();
     }
 
     /** Getters & Setters **/
@@ -49,6 +58,8 @@ public abstract class Account {
     public void setPenaltyFee(Money penaltyFee) {this.penaltyFee = penaltyFee;}
     public AccountHolder getSecondaryOwner() {return secondaryOwner;}
     public void setSecondaryOwner(AccountHolder secondaryOwner) {this.secondaryOwner = secondaryOwner;}
+    public LocalDateTime getCreatedDateTime() {return createdDateTime;}
+    public void setCreatedDateTime(LocalDateTime createdDateTime) {this.createdDateTime = createdDateTime;}
 
     /** Methods **/
     public void applyPenaltyFee(){

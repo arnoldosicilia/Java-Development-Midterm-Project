@@ -1,6 +1,8 @@
 package com.ironhack.midtermProject.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ironhack.midtermProject.classes.Address;
+import org.yaml.snakeyaml.util.ArrayUtils;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -8,6 +10,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @PrimaryKeyJoinColumn(name="id")
@@ -27,8 +30,10 @@ public class AccountHolder extends User {
     })
     private Address mailingAddress;
     @OneToMany(mappedBy = "primaryOwner")
+    @JsonIgnore
     private List<Account> primaryAccounts;
     @OneToMany(mappedBy = "secondaryOwner")
+    @JsonIgnore
     private List<Account> secondaryAccounts;
 
 
@@ -51,5 +56,15 @@ public class AccountHolder extends User {
     public void setPrimaryAddress(Address primaryAddress) {this.primaryAddress = primaryAddress;}
     public Address getMailingAddress() {return mailingAddress;}
     public void setMailingAddress(Address mailingAddress) {this.mailingAddress = mailingAddress;}
+    public List<Account> getPrimaryAccounts() {return primaryAccounts;}
+    public void setPrimaryAccounts(List<Account> primaryAccounts) {this.primaryAccounts = primaryAccounts;}
+    public List<Account> getSecondaryAccounts() {return secondaryAccounts;}
+    public void setSecondaryAccounts(List<Account> secondaryAccounts) {this.secondaryAccounts = secondaryAccounts;}
 
+    public List<Account> getAllAccounts(){
+        List<Account> result = new ArrayList<>();
+        this.primaryAccounts.stream().map(x->result.add(x)).collect(Collectors.toList());
+        this.secondaryAccounts.stream().map(x->result.add(x)).collect(Collectors.toList());
+        return result;
+    }
 }
