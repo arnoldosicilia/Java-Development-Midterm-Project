@@ -1,6 +1,7 @@
 package com.ironhack.midtermProject.controller.impl;
 
 import com.ironhack.midtermProject.controller.dto.transference.NewTransference;
+import com.ironhack.midtermProject.exceptions.FraudException;
 import com.ironhack.midtermProject.model.Transference;
 import com.ironhack.midtermProject.model.User;
 import com.ironhack.midtermProject.service.AccountService;
@@ -21,6 +22,6 @@ public class AccountController {
 
     @PostMapping("/account-holder/transference")
     @ResponseStatus(HttpStatus.OK)
-    public Transference transfer(@RequestBody NewTransference newTransference, @AuthenticationPrincipal Authentication authentication) { return accountService.transfer(newTransference, authentication);}
+    public Transference transfer(@RequestBody NewTransference newTransference, @AuthenticationPrincipal Authentication authentication) throws FraudException { return accountService.transfer(newTransference, authentication);}
 
 }

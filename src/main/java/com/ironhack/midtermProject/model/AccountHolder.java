@@ -29,6 +29,7 @@ public class AccountHolder extends User {
             @AttributeOverride(name = "number", column = @Column(name = "mailing_address_number"))
     })
     private Address mailingAddress;
+
     @OneToMany(mappedBy = "primaryOwner")
     @JsonIgnore
     private List<Account> primaryAccounts;
@@ -61,7 +62,7 @@ public class AccountHolder extends User {
     public List<Account> getSecondaryAccounts() {return secondaryAccounts;}
     public void setSecondaryAccounts(List<Account> secondaryAccounts) {this.secondaryAccounts = secondaryAccounts;}
 
-    public List<Account> getAllAccounts(){
+    public List<Account> accessAllAccounts(){
         List<Account> result = new ArrayList<>();
         this.primaryAccounts.stream().map(x->result.add(x)).collect(Collectors.toList());
         this.secondaryAccounts.stream().map(x->result.add(x)).collect(Collectors.toList());

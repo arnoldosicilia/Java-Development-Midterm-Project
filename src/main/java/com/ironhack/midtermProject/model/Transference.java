@@ -22,7 +22,7 @@ public class Transference {
     private Account destinationAccount;
     @NotNull
     private Money amount;
-    private LocalDateTime transactionDate;
+    private LocalDateTime transferenceDate;
 
 
     public Transference() {}
@@ -31,7 +31,7 @@ public class Transference {
         this.originAccount = originAccount;
         this.destinationAccount = destinationAccount;
         this.amount = amount;
-        this.transactionDate = LocalDateTime.now();
+        this.transferenceDate = LocalDateTime.now();
     }
 
 
@@ -43,6 +43,6 @@ public class Transference {
     public void setDestinationAccount(Account destinationAccount) {this.destinationAccount = destinationAccount;}
     public Money getAmount() {return amount;}
     public void setAmount(Money amount) {this.amount = amount;}
-    public LocalDateTime getTransactionDate() {return transactionDate;}
-    public void setTransactionDate(LocalDateTime transactionDate) {this.transactionDate = transactionDate;}
+    public LocalDateTime getTransactionDate() {return transferenceDate;}
+    public void setTransactionDate(LocalDateTime transactionDate) {this.transferenceDate = transactionDate;}
 }

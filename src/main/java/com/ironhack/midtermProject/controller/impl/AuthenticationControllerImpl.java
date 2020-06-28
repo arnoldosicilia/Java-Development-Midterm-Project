@@ -21,7 +21,7 @@ public class AuthenticationControllerImpl implements AuthenticationControllerInt
 
     @PostMapping("/login")
     @ResponseStatus(HttpStatus.OK)
-    public Authentication login(@AuthenticationPrincipal Authentication authentication){return authentication;}
+    public Authentication login(@AuthenticationPrincipal Authentication authentication){ return authentication;}
 
     @GetMapping("/logout")
     @ResponseStatus(HttpStatus.OK)

@@ -7,11 +7,11 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public abstract class Account {
+@Inheritance(strategy = InheritanceType.JOINED)
+public class Account {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Long id;
     @ManyToOne(optional = false)
     protected AccountHolder primaryOwner;
@@ -26,14 +26,16 @@ public abstract class Account {
     @Embedded
     @AttributeOverrides(value ={
             @AttributeOverride(name = "amount", column = @Column(name = "penalty_fee_amount")),
-            @AttributeOverride(name = "currency", column = @Column(name = "penalty_fee_currency"))
+            @AttributeOverride(name = "currency", column = @Column(name ="penalty_fee_currency"))
     })
+    protected Money penaltyFee;
+
     @OneToMany(mappedBy = "originAccount")
     protected List<Transference> sentTransferences;
     @OneToMany(mappedBy = "destinationAccount")
     protected List<Transference> recievedTransferences;
 
-    protected Money penaltyFee;
+
     protected LocalDateTime createdDateTime;
 
 

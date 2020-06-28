@@ -4,6 +4,7 @@ import com.ironhack.midtermProject.classes.Money;
 import com.ironhack.midtermProject.controller.dto.transference.NewTransference;
 import com.ironhack.midtermProject.exceptions.AccountNotFoundException;
 import com.ironhack.midtermProject.exceptions.AuthenticationErrorException;
+import com.ironhack.midtermProject.exceptions.FraudException;
 import com.ironhack.midtermProject.model.Account;
 import com.ironhack.midtermProject.model.AccountHolder;
 import com.ironhack.midtermProject.model.Transference;
@@ -26,17 +27,24 @@ public class AccountService {
     TransferenceRepository transferenceRepository;
     @Autowired
     AccountHolderRepository accountHolderRepository;
+    @Autowired
+    FraudService fraudService;
 
     @Transactional
-    public Transference transfer(NewTransference newTransference, Authentication authentication) throws AuthenticationErrorException {
+    public Transference transfer(NewTransference newTransference, Authentication authentication) throws AuthenticationErrorException, FraudException {
 
         AccountHolder loggedUser = accountHolderRepository.findByUsername(authentication.getName());
         Account originAccount = accountRepository.findById(newTransference.getOriginId()).orElseThrow(()-> new AccountNotFoundException("Not found the origin account"));
 
-        if(!loggedUser.getAllAccounts().contains(originAccount)){
+        if(!loggedUser.accessAllAccounts().contains(originAccount)){
             throw new AuthenticationErrorException("The Account does not belong to the logged user");
         }
-        Account destinationAccount = accountRepository.findById(newTransference.getDestinationId()).orElseThrow(()-> new AccountNotFoundException("Not found the destination account"));
+
+        if(!fraudService.firstCondition(newTransference)) {
+            throw new FraudException("This transaction can not be done due to fraud detections");
+        }
+
+        Account destinationAccount = accountRepository.findById(newTransference.getDestinationId()).orElseThrow(() -> new AccountNotFoundException("Not found the destination account"));
         Money amount = new Money(newTransference.getAmount());
 
         originAccount.getBalance().decreaseAmount(amount);
@@ -44,6 +52,7 @@ public class AccountService {
         Transference transference = new Transference(originAccount, destinationAccount, amount);
 
         return transferenceRepository.save(transference);
+
     }
 
 
