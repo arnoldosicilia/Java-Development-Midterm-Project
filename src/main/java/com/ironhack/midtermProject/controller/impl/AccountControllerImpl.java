@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class AccountController {
+public class AccountControllerImpl {
 
     @Autowired
     AccountService accountService;

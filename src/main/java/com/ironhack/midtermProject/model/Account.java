@@ -63,10 +63,4 @@ public class Account {
     public LocalDateTime getCreatedDateTime() {return createdDateTime;}
     public void setCreatedDateTime(LocalDateTime createdDateTime) {this.createdDateTime = createdDateTime;}
 
-    /** Methods **/
-    //public void applyPenaltyFee(){
-       // this.balance.decreaseAmount(this.penaltyFee.getAmount());
-    //}
-
-
 }

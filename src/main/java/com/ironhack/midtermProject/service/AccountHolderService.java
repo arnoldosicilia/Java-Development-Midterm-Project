@@ -6,6 +6,8 @@ import com.ironhack.midtermProject.enums.SystemRole;
 import com.ironhack.midtermProject.model.AccountHolder;
 import com.ironhack.midtermProject.model.Role;
 import com.ironhack.midtermProject.repository.AccountHolderRepository;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -19,8 +21,10 @@ public class AccountHolderService {
 
     private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
-    public AccountHolder create(CreateAccountHolder createAccountHolder){
+    private final Logger LOGGER = LogManager.getLogger(AccountHolderService.class);
 
+    public AccountHolder create(CreateAccountHolder createAccountHolder){
+        LOGGER.info("[INIT] - create(AccountHolder)");
         String encodedPassword = passwordEncoder.encode(createAccountHolder.getPassword());
 
         AccountHolder accountHolder = new AccountHolder(createAccountHolder.getName(),
@@ -30,7 +34,7 @@ public class AccountHolderService {
                 new Address(createAccountHolder.getPrimaryAddressDirection(), createAccountHolder.getPrimaryAddressNumber()),
                 new Address(createAccountHolder.getMailingAddressDirection(), createAccountHolder.getMailingAddressNumber()));
         accountHolder.addRole(new Role(SystemRole.ACCOUNT_HOLDER, accountHolder));
-
+        LOGGER.info("[END] - create(AccountHolder)");
         return accountHolderRepository.save(accountHolder);
     }
 

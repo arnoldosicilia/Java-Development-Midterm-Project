@@ -3,6 +3,8 @@ package com.ironhack.midtermProject.service;
 import com.ironhack.midtermProject.controller.dto.transference.NewTransference;
 import com.ironhack.midtermProject.model.Transference;
 import com.ironhack.midtermProject.repository.TransferenceRepository;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,9 +17,10 @@ public class FraudService {
 
     @Autowired
     TransferenceRepository transferenceRepository;
+    private final Logger LOGGER = LogManager.getLogger(FraudService.class);
 
     public boolean firstCondition(NewTransference newTransference){
-
+        LOGGER.info("[INIT] - firstCondition() Fraud Detection");
         BigDecimal sumLastDayAmounts = transferenceRepository.sumLastDayTransferences(newTransference.getOriginId());
         List<BigDecimal> sumOfTransferenceByDay = transferenceRepository.sumOfTransferenceByDay(newTransference.getOriginId());
 
