@@ -17,6 +17,7 @@ public class FraudService {
 
     @Autowired
     TransferenceRepository transferenceRepository;
+
     private final Logger LOGGER = LogManager.getLogger(FraudService.class);
 
     public boolean firstCondition(NewTransference newTransference){
@@ -25,9 +26,8 @@ public class FraudService {
         List<BigDecimal> sumOfTransferenceByDay = transferenceRepository.sumOfTransferenceByDay(newTransference.getOriginId());
 
         BigDecimal max = sumOfTransferenceByDay.stream().max(BigDecimal::compareTo).get();
-
-        System.out.println(max);
-        System.out.println(newTransference.getAmount());
+        LOGGER.info("Max sum of the amount on the transference by day " + max);
+        LOGGER.info("Amount of the transference " + newTransference.getAmount());
 
         boolean result;
 
@@ -36,12 +36,12 @@ public class FraudService {
         } else {
             result = false;
         }
-        System.out.println(result);
+        LOGGER.info("[END] - firstCondition() Fraud Detection  ->" + result);
         return result;
     }
 
     public boolean secondCondition(NewTransference newTransference){
-
+        LOGGER.info("[INIT] - secondCondition() Fraud Detection");
         boolean result;
 
         List<Transference> transferences = transferenceRepository.lastSecondTransferences(newTransference.getOriginId());
@@ -50,8 +50,7 @@ public class FraudService {
         }else{
             result = true;
         }
+        LOGGER.info("[END] - secondCondition() Fraud Detection  ->" + result);
         return result;
     }
-
-
 }

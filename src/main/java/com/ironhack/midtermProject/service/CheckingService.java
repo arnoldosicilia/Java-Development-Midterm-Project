@@ -80,7 +80,6 @@ public class CheckingService {
             LOGGER.error("The logged user is not an admin or owner of the account");
             throw new AuthenticationErrorException("The user is not the owner nor an admin");
         }
-
         ShowBalance showBalance = new ShowBalance(account.getId(), account.getBalance().getAmount(), account.getBalance().getCurrency());
         if(account.getMinimumBalance().getAmount().compareTo(account.getBalance().getAmount()) > 0 && !account.isBelowMinimumBalance()){
             LOGGER.info("The account balance is below the minimum so the penalty fee is applied");
