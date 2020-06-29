@@ -5,6 +5,7 @@ import com.ironhack.midtermProject.classes.Address;
 import org.yaml.snakeyaml.util.ArrayUtils;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -22,6 +23,7 @@ public class AccountHolder extends User {
             @AttributeOverride(name = "direction", column = @Column(name = "primary_address_direction")),
             @AttributeOverride(name = "number", column = @Column(name = "primary_address_number"))
     })
+    @NotNull
     private Address primaryAddress;
     @Embedded
     @AttributeOverrides(value ={
@@ -41,11 +43,10 @@ public class AccountHolder extends User {
     /** Constructors **/
     public AccountHolder() {}
 
-    public AccountHolder(String name, String username, String password, LocalDate dateOfBirth, Address primaryAddress, Address mailingAddress) {
+    public AccountHolder(String name, String username, String password, LocalDate dateOfBirth, Address primaryAddress) {
         super(name, username, password);
         this.dateOfBirth = dateOfBirth;
         this.primaryAddress = primaryAddress;
-        this.mailingAddress = mailingAddress;
         this.primaryAccounts = new ArrayList<>();
         this.secondaryAccounts = new ArrayList<>();
     }

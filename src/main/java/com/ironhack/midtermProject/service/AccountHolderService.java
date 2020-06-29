@@ -31,8 +31,8 @@ public class AccountHolderService {
                 createAccountHolder.getUsername(),
                 encodedPassword,
                 createAccountHolder.getDateOfBirth(),
-                new Address(createAccountHolder.getPrimaryAddressDirection(), createAccountHolder.getPrimaryAddressNumber()),
-                new Address(createAccountHolder.getMailingAddressDirection(), createAccountHolder.getMailingAddressNumber()));
+                new Address(createAccountHolder.getPrimaryAddressDirection(), createAccountHolder.getPrimaryAddressNumber()));
+
         accountHolder.addRole(new Role(SystemRole.ACCOUNT_HOLDER, accountHolder));
         LOGGER.info("[END] - create(AccountHolder)");
         return accountHolderRepository.save(accountHolder);

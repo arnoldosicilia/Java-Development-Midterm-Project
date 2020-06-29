@@ -4,6 +4,7 @@ import com.ironhack.midtermProject.classes.Money;
 import com.ironhack.midtermProject.enums.AccountStatus;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
 @Entity

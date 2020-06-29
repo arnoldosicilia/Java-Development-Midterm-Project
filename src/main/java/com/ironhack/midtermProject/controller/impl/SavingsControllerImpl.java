@@ -7,6 +7,8 @@ import com.ironhack.midtermProject.model.Savings;
 import com.ironhack.midtermProject.service.SavingsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -33,13 +35,13 @@ public class SavingsControllerImpl implements SavingsControllerInterface {
 
     @GetMapping("/savings/{id}/check-balance")
     @ResponseStatus(HttpStatus.OK)
-    public ShowBalance checkBalance(@PathVariable Long id){return savingsService.checkBalance(id);}
+    public ShowBalance checkBalance(@PathVariable Long id, @AuthenticationPrincipal Authentication authentication){return savingsService.checkBalance(id, authentication);}
 
-    @PatchMapping("/savings/{id}/debit-balance/{amount}")
+    @PatchMapping("/admin/savings/{id}/debit-balance/{amount}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void debitBalance(@PathVariable Long id, @PathVariable BigDecimal amount){savingsService.debitBalance(id, amount);}
 
-    @PatchMapping("/savings/{id}/credit-balance/{amount}")
+    @PatchMapping("/admin/savings/{id}/credit-balance/{amount}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void creditBalance(@PathVariable Long id, @PathVariable BigDecimal amount){savingsService.creditBalance(id, amount);}
 

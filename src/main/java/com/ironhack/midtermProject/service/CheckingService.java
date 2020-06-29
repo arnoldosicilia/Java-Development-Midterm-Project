@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.ironhack.midtermProject.classes.Helpers.calculateYears;
 
@@ -71,15 +72,18 @@ public class CheckingService {
 
     public ShowBalance checkBalance(Long id,  Authentication authentication) throws AuthenticationErrorException {
         LOGGER.info("[INIT] - checkBalance(Checking)");
-        AccountHolder loggedUser = accountHolderRepository.findByUsername(authentication.getName());
-        boolean isAdmin = loggedUser.getRoles().stream().anyMatch(x-> x.getRole().equals(SystemRole.ADMIN));
+        AccountHolder loggedUser = accountHolderRepository.findByName(authentication.getName());
+
+        boolean isAdmin = loggedUser.getRoles().stream().anyMatch(x ->x.getRole().equals(SystemRole.ADMIN));
         LOGGER.info("Logged user role is " + loggedUser.getRoles());
 
         Checking account = checkingRepository.findById(id).orElseThrow(() -> new AccountNotFoundException("The Checking Account has not been found"));
+
         if(!isAdmin || !loggedUser.accessAllAccounts().contains(account)){
             LOGGER.error("The logged user is not an admin or owner of the account");
             throw new AuthenticationErrorException("The user is not the owner nor an admin");
         }
+
         ShowBalance showBalance = new ShowBalance(account.getId(), account.getBalance().getAmount(), account.getBalance().getCurrency());
         if(account.getMinimumBalance().getAmount().compareTo(account.getBalance().getAmount()) > 0 && !account.isBelowMinimumBalance()){
             LOGGER.info("The account balance is below the minimum so the penalty fee is applied");
@@ -95,6 +99,7 @@ public class CheckingService {
         LOGGER.info("[INIT] - debitBalance(Checking)");
         Checking account = checkingRepository.findById(id).orElseThrow(()-> new AccountNotFoundException("The Checking Account has not been found"));
         account.getBalance().decreaseAmount(amount);
+        LOGGER.info("Has decreased the amount");
         if(account.getMinimumBalance().getAmount().compareTo(account.getBalance().getAmount()) > 0 && !account.isBelowMinimumBalance()){
             LOGGER.info("The account balance is below the minimum so the penalty fee is applied");
             account.getBalance().decreaseAmount(account.getPenaltyFee());
