@@ -15,7 +15,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
+
+import static com.ironhack.midtermProject.classes.Helpers.*;
 
 @Service
 public class CreditCardService {
@@ -42,20 +45,33 @@ public class CreditCardService {
     public List<CreditCard> findAll(){ return creditCardRepository.findAll();}
     public CreditCard findById(Long id){return creditCardRepository.findById(id).orElseThrow(()-> new AccountNotFoundException("The account has not been found"));}
 
+    public void updateInterest(Long id){
+        CreditCard account = creditCardRepository.findById(id).orElseThrow(() -> new AccountNotFoundException("The Checking Account has not been found"));
+        if(calculateMonths(account.getLastInterestUpdate()) >= 1) {
+            BigDecimal calculatedInterest = account.getBalance().getAmount().multiply(account.getInterestRate().divide(new BigDecimal("12"), 2, RoundingMode.HALF_EVEN)).multiply(new BigDecimal(calculateMonths(account.getLastInterestUpdate())));
+            account.getBalance().increaseAmount(calculatedInterest);
+            account.setLastInterestUpdate(account.getLastInterestUpdate().plusMonths(calculateMonths(account.getLastInterestUpdate())));
+        }
+        creditCardRepository.save(account);
+    }
+
     public ShowBalance checkBalance(Long id){
         CreditCard account = creditCardRepository.findById(id).orElseThrow(() -> new AccountNotFoundException("The Checking Account has not been found"));
+        updateInterest(id);
         ShowBalance showBalance = new ShowBalance(account.getId(), account.getBalance().getAmount(), account.getBalance().getCurrency());
         return showBalance;
     }
 
     public void debitBalance(Long id, BigDecimal amount) {
         CreditCard account = creditCardRepository.findById(id).orElseThrow(()-> new AccountNotFoundException("The Checking Account has not been found"));
+        updateInterest(id);
         account.getBalance().decreaseAmount(amount);
         creditCardRepository.save(account);
     }
 
     public void creditBalance(Long id, BigDecimal amount) {
         CreditCard account = creditCardRepository.findById(id).orElseThrow(()-> new AccountNotFoundException("The Checking Account has not been found"));
+        updateInterest(id);
         account.getBalance().increaseAmount(amount);
         creditCardRepository.save(account);
     }

@@ -14,8 +14,14 @@ import com.ironhack.midtermProject.repository.SavingsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
+
 import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.time.LocalDate;
 import java.util.List;
+
+import static com.ironhack.midtermProject.classes.Helpers.*;
 
 @Service
 public class SavingsService {
@@ -38,7 +44,7 @@ public class SavingsService {
 
         savings.setInterestRate(createSavings.getInterestRate() != null ? createSavings.getInterestRate() : new BigDecimal("0.0025"));
         savings.setMinimumBalance(createSavings.getMinimumBalance() != null ? new Money(createSavings.getMinimumBalance()) : new Money(new BigDecimal("1000")));
-
+        savings.setLastInterestUpdate(LocalDate.now());
 
         return savingsRepository.save(savings);
     }
@@ -46,21 +52,45 @@ public class SavingsService {
     public List<Savings> findAll(){ return savingsRepository.findAll();}
     public Savings findById(Long id){return savingsRepository.findById(id).orElseThrow(()-> new AccountNotFoundException("The account has not been found"));}
 
+    public void updateInterest(Long id){
+        Savings account = savingsRepository.findById(id).orElseThrow(() -> new AccountNotFoundException("The Checking Account has not been found"));
+        if(calculateYears(account.getLastInterestUpdate()) >= 1) {
+        BigDecimal calculatedInterest = account.getBalance().getAmount().multiply(account.getInterestRate()).multiply(new BigDecimal(calculateYears(account.getLastInterestUpdate())));
+        account.getBalance().increaseAmount(calculatedInterest);
+        account.setLastInterestUpdate(account.getLastInterestUpdate().plusYears(calculateYears(account.getLastInterestUpdate())));
+        }
+        savingsRepository.save(account);
+    }
+
     public ShowBalance checkBalance(Long id){
         Savings account = savingsRepository.findById(id).orElseThrow(() -> new AccountNotFoundException("The Checking Account has not been found"));
         ShowBalance showBalance = new ShowBalance(account.getId(), account.getBalance().getAmount(), account.getBalance().getCurrency());
+
+        updateInterest(id);
+
+        if(account.getMinimumBalance().getAmount().compareTo(account.getBalance().getAmount()) > 0 && !account.isBelowMinimumBalance()){
+            account.getBalance().decreaseAmount(account.getPenaltyFee());
+            savingsRepository.save(account);
+        }
+
         return showBalance;
     }
 
     public void debitBalance(Long id, BigDecimal amount) {
         Savings account = savingsRepository.findById(id).orElseThrow(()-> new AccountNotFoundException("The Checking Account has not been found"));
+        updateInterest(id);
         account.getBalance().decreaseAmount(amount);
         savingsRepository.save(account);
     }
 
     public void creditBalance(Long id, BigDecimal amount) {
         Savings account = savingsRepository.findById(id).orElseThrow(()-> new AccountNotFoundException("The Checking Account has not been found"));
+        updateInterest(id);
         account.getBalance().increaseAmount(amount);
+
+        if(account.isBelowMinimumBalance() && account.getBalance().getAmount().compareTo(account.getMinimumBalance().getAmount()) > 0){
+            account.setBelowMinimumBalance(false);
+        }
         savingsRepository.save(account);
     }
 

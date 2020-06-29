@@ -22,12 +22,14 @@ public class Checking extends StudentChecking {
             @AttributeOverride(name = "currency", column = @Column(name = "minimum_balance_currency"))
     })
     private Money minimumBalance;
+    private boolean belowMinimumBalance;
 
     /** Constructors **/
     public Checking() {}
 
     public Checking(AccountHolder primaryOwner, Money balance, String secretKey, AccountStatus status) {
         super(primaryOwner, balance, secretKey, status);
+        this.belowMinimumBalance = false;
     }
 
     /** Getters & Setters **/
@@ -41,5 +43,7 @@ public class Checking extends StudentChecking {
         return monthlyMaintenanceFee;
     }
     public void setMonthlyMaintenanceFee(Money monthlyMaintenanceFee) {this.monthlyMaintenanceFee = monthlyMaintenanceFee;}
+    public boolean isBelowMinimumBalance() {return belowMinimumBalance;}
+    public void setBelowMinimumBalance(boolean belowMinimumBalance) {this.belowMinimumBalance = belowMinimumBalance;}
 
 }

@@ -5,6 +5,7 @@ import com.ironhack.midtermProject.controller.dto.transference.NewTransference;
 import com.ironhack.midtermProject.exceptions.AccountNotFoundException;
 import com.ironhack.midtermProject.exceptions.AuthenticationErrorException;
 import com.ironhack.midtermProject.exceptions.FraudException;
+import com.ironhack.midtermProject.exceptions.NotEnoughFundsException;
 import com.ironhack.midtermProject.model.Account;
 import com.ironhack.midtermProject.model.AccountHolder;
 import com.ironhack.midtermProject.model.Transference;
@@ -31,18 +32,14 @@ public class AccountService {
     FraudService fraudService;
 
     @Transactional
-    public Transference transfer(NewTransference newTransference, Authentication authentication) throws AuthenticationErrorException, FraudException {
+    public Transference transfer(NewTransference newTransference, Authentication authentication) throws AuthenticationErrorException, FraudException, NotEnoughFundsException {
 
         AccountHolder loggedUser = accountHolderRepository.findByUsername(authentication.getName());
         Account originAccount = accountRepository.findById(newTransference.getOriginId()).orElseThrow(()-> new AccountNotFoundException("Not found the origin account"));
 
-        if(!loggedUser.accessAllAccounts().contains(originAccount)){
-            throw new AuthenticationErrorException("The Account does not belong to the logged user");
-        }
-
-        if(!fraudService.firstCondition(newTransference) || !fraudService.secondCondition(newTransference)) {
-            throw new FraudException("This transaction can not be done due to fraud detections");
-        }
+        if(!loggedUser.accessAllAccounts().contains(originAccount)){ throw new AuthenticationErrorException("The Account does not belong to the logged user"); }
+        if(!fraudService.firstCondition(newTransference) || !fraudService.secondCondition(newTransference)) { throw new FraudException("This transaction can not be done due to fraud detections"); }
+        if(newTransference.getAmount().compareTo(originAccount.getBalance().getAmount()) > 0 ){ throw new NotEnoughFundsException("There are not enough funds in the account"); }
 
         Account destinationAccount = accountRepository.findById(newTransference.getDestinationId()).orElseThrow(() -> new AccountNotFoundException("Not found the destination account"));
         Money amount = new Money(newTransference.getAmount());
