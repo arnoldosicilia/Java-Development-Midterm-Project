@@ -1,4 +1,4 @@
-package com.ironhack.midtermProject.controller.dto;
+package com.ironhack.midtermProject.controller.dto.create;
 
 import com.ironhack.midtermProject.enums.AccountStatus;
 

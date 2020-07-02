@@ -8,6 +8,8 @@ import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @PrimaryKeyJoinColumn(name="id")
@@ -23,6 +25,8 @@ public class Savings extends Account{
     })
     private Money minimumBalance;
     private BigDecimal interestRate;
+    private boolean belowMinimumBalance;
+    private LocalDate lastInterestUpdate;
 
     /** Constructors **/
     public Savings() {}
@@ -31,6 +35,7 @@ public class Savings extends Account{
         super(primaryOwner, balance);
         this.secretKey = secretKey;
         this.status = status;
+        this.belowMinimumBalance =  false;
     }
 
     /** Getters & Setters **/
@@ -38,5 +43,13 @@ public class Savings extends Account{
     public void setMinimumBalance(Money minimumBalance) {this.minimumBalance = minimumBalance;}
     public BigDecimal getInterestRate() {return interestRate;}
     public void setInterestRate(BigDecimal interestRate) {this.interestRate = interestRate;}
+    public boolean isBelowMinimumBalance() {return belowMinimumBalance; }
+    public void setBelowMinimumBalance(boolean belowMinimumBalance) {this.belowMinimumBalance = belowMinimumBalance;}
+    public String getSecretKey() {return secretKey;}
+    public void setSecretKey(String secretKey) {this.secretKey = secretKey;}
+    public AccountStatus getStatus() {return status;}
+    public void setStatus(AccountStatus status) {this.status = status;}
+    public LocalDate getLastInterestUpdate() {return lastInterestUpdate;}
+    public void setLastInterestUpdate(LocalDate lastInterestUpdate) {this.lastInterestUpdate = lastInterestUpdate;}
 
 }
