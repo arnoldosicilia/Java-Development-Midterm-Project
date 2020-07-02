@@ -25,13 +25,13 @@ public class FraudService {
         BigDecimal sumLastDayAmounts = transferenceRepository.sumLastDayTransferences(newTransference.getOriginId());
         List<BigDecimal> sumOfTransferenceByDay = transferenceRepository.sumOfTransferenceByDay(newTransference.getOriginId());
 
-        BigDecimal max = sumOfTransferenceByDay.stream().max(BigDecimal::compareTo).get();
+        BigDecimal max = sumOfTransferenceByDay.stream().max(BigDecimal::compareTo).orElse(BigDecimal.ZERO);
         LOGGER.info("Max sum of the amount on the transference by day " + max);
         LOGGER.info("Amount of the transference " + newTransference.getAmount());
 
         boolean result;
 
-        if (max.multiply(new BigDecimal("1.5")).compareTo(newTransference.getAmount()) > 0 ) {
+        if (max.compareTo(BigDecimal.ZERO) == 0 || max.multiply(new BigDecimal("1.5")).compareTo(newTransference.getAmount()) > 0 ) {
             result = true;
         } else {
             result = false;
